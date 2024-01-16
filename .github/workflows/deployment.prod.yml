@@ -6,7 +6,7 @@ on:
         required: true
         type: string
       deployment-port:
-        required: true
+        required: false
         type: number
         default: 22
       deployment-dir:
