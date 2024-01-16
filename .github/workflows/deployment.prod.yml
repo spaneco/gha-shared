@@ -1,0 +1,36 @@
+name: "[PROD] Deploy main app"
+on:
+  workflow_call:
+    inputs:
+      deployment-host:
+        required: true
+        type: string
+      deployment-port:
+        required: true
+        type: number
+        default: 22
+      deployment-dir:
+        required: true
+        type: string        
+    vars:
+    secrets:
+      BUILDER_SSH_USERNAME:
+        required: true     
+      BUILDER_SSH_PASSWORD:
+        required: true   
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into production server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ inputs.deployment-host }}
+          username: ${{ vars.BUILDER_SSH_USERNAME }}
+          port: ${{ inputs.deployment-port }}
+          password: ${{ secrets.BUILDER_SSH_PASSWORD }}
+          script: |
+            cd ${{ inputs.deployment-dir }}
+            git add . 
+            git fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin prod 
+            git reset --hard origin/prod
