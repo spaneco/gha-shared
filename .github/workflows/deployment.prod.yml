@@ -25,7 +25,7 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ inputs.deployment-host }}
-          username: ${{ vars.BUILDER_SSH_USERNAME }}
+          username: ${{ secrets.BUILDER_SSH_USERNAME }}
           port: ${{ inputs.deployment-port }}
           password: ${{ secrets.BUILDER_SSH_PASSWORD }}
           script: |
