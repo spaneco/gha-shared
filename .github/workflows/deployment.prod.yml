@@ -12,7 +12,6 @@ on:
       deployment-dir:
         required: true
         type: string        
-    vars:
     secrets:
       BUILDER_SSH_USERNAME:
         required: true     
